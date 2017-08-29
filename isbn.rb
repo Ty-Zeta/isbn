@@ -19,3 +19,20 @@ def checking1
         end
     end
 checking1
+
+def checking2
+    isbn = gets.chomp
+    x = 10
+    isbn = isbn.gsub(/[ -]/, '')
+    isbn = isbn.split(//)
+    checksum = isbn.pop
+    p checksum
+    check = 1 * isbn[0].to_i + 2 * isbn[1].to_i + 3 * isbn[2].to_i + 4 * isbn[3].to_i + 5 * isbn[4].to_i + 6 * isbn[5].to_i + 7 * isbn[6].to_i + 8 * isbn[7].to_i + 9 * isbn[8].to_i
+    sum = check % 11
+        if sum == x
+            p "VALID"
+        else
+            p "INVALID"
+        end
+end
+checking2
