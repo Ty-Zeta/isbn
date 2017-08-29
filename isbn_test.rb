@@ -17,4 +17,10 @@ class TestIsbn < Minitest::Test
         assert_equal(13, check2.length)
     end
 
+    def test_length_10_v2
+        check3 = "123456789-0"
+        check3 = check3.gsub(/-/, '')
+        assert_equal(10, check3.length)
+    end
+
 end
