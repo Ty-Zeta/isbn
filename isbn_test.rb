@@ -23,4 +23,16 @@ class TestIsbn < Minitest::Test
         assert_equal(10, check3.length)
     end
 
+    def test_length_13_v2
+        check4 = "123456789012-3"
+        check4 = check4.gsub(/-/, '')
+        assert_equal(13, check4.length)
+    end
+
+    def test_space_dash
+        check5 = "123456789 0-123"
+        check5 = check5.gsub(/[ -]/, '')
+        assert_equal(13, check5.length)
+    end
+
 end
