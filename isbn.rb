@@ -12,6 +12,17 @@ def isbn_length(isbn)
     end
 end 
 
+def isbn_dash(isbn)
+    clean_isbn = isbn.delete("-")
+
+    case clean_isbn.length
+        when 10 
+            then true
+        when 13 
+            then true
+        end
+end
+
 
 
 

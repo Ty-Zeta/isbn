@@ -20,6 +20,13 @@ class TestIsbn < Minitest::Test
         assert_equal(true, isbn_length("1234567890123"))
     end
 
+    def test_10_dash
+        assert_equal(true, isbn_dash("1-234-56789-0"))
+    end
+
+    def test_13_dash
+        assert_equal(true, isbn_dash("978-0-13-149505-0"))
+    end
 
 
 end
