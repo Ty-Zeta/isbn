@@ -28,6 +28,27 @@ def isbn_dashx(isbn)
     end
 end
 
+def check_sum(isbn)
+    sum = 0
+    
+    clean_isbn = isbn.scan /\w/
+    clean_isbn.each_with_index do |index_position, value|
+        sum = sum + ((value + 1).to_i * index_position.to_i)
+    end
+
+    mod = sum % 11
+        if mod == 10
+            last = "x"
+            clean_isbn << last
+            
+        elsif mod == 0
+            last = "0"
+            clean_isbn << last
+            
+        else isbn << mod.to_s
+        end
+    last
+end
 
 
 
