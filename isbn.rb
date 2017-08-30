@@ -12,15 +12,20 @@ def isbn_length(isbn)
     end
 end 
 
-def isbn_dash(isbn)
+def isbn_dashx(isbn)
+    x = 10
     clean_isbn = isbn.delete("-")
 
+    unless isbn || (isbn.include?(x) && isbn[9] == x)
+        false
+    end
+
     case clean_isbn.length
-        when 10 
+        when 10
             then true
-        when 13 
+        when 13
             then true
-        end
+    end
 end
 
 
