@@ -14,7 +14,7 @@ end
 
 def isbn_dashx(isbn)
     x = 10
-    clean_isbn = isbn.delete("-")
+    clean_isbn = isbn.delete(" -")
 
     unless isbn || (isbn.include?(x) && isbn[9] == x)
         false
