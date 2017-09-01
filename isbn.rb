@@ -13,12 +13,7 @@ def isbn_length(isbn)
 end 
 
 def isbn_dashx(isbn)
-    x = 10
     clean_isbn = isbn.delete(" -")
-
-    unless isbn || (isbn.include?(x) && isbn[9] == x)
-        false
-    end
 
     case clean_isbn.length
         when 10
@@ -30,105 +25,23 @@ end
 
 def check_sum(isbn)
     sum = 0
-    
+
     clean_isbn = isbn.scan /\w/
-    clean_isbn.each_with_index do |index_position, value|
-        sum = sum + ((value + 1).to_i * index_position.to_i)
+    last_digit = clean_isbn.pop
+        if last_digit == "x"
+            last_digit = last_digit.to_s
+        end
+    clean_isbn.each_with_index do |value, index_position|
+        sum = sum + ((index_position + 1).to_i * value.to_i)
     end
 
     mod = sum % 11
-        if mod == 10
-            last = "x"
-            clean_isbn << last
+        if last_digit == "x" && mod == 10
+            true
             
-        elsif mod == 0
-            last = "0"
-            clean_isbn << last
-            
-        else isbn << mod.to_s
+        elsif last_digit.to_i == mod.to_i
+            true
+        else
+            false
         end
-    last
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# check1 ="1234567890"
-
-# check2 = "1234567890123"
-
-# check3 = "123456789-0"
-
-# check4 = "123456789012-3"
-
-# check5 = "123456789 0-123"
-
-# # def checking1
-# #     check1_sum = 1*1, 2*2, 3*3, 4*4, 5*5, 6*6, 7*7, 8*8, 9*9
-# #     check1_sum = 1 + 4 + 9 + 16 + 25 + 36 + 49 + 64 + 81
-# #     check1_sum = 285 % 11
-# #         if check1_sum == 10
-# #             p "true"
-# #         else
-# #             p "false"
-# #         end
-# #     end
-# # checking1
-
-# def checking2
-#     x = 10
-#     isbn = isbn.gsub(/[ -abcdefghijklmnopqrstuvwyz]/, '')
-#     isbn = isbn.split(//)
-#     checksum = isbn.pop
-#     p checksum
-#     check = 1 * isbn[0].to_i + 2 * isbn[1].to_i + 3 * isbn[2].to_i + 4 * isbn[3].to_i + 5 * isbn[4].to_i + 6 * isbn[5].to_i + 7 * isbn[6].to_i + 8 * isbn[7].to_i + 9 * isbn[8].to_i
-#     sum = check % 11
-#         if sum == x
-#             p "VALID"
-#         else
-#             p "INVALID"
-#         end
-# end
-
-# def checking3
-#     x = 10
-#     isbn = isbn.gsub(/[ -abcdefghijklmnopqrstuvwyz]/, '')
-#     isbn = isbn.split(//)
-#     checksum = isbn.pop
-#     p checksum
-#     check = 1 * isbn[0].to_i + 3 * isbn[1].to_i + 1 * isbn[2].to_i + 3 * isbn[3].to_i + 1 * isbn[4].to_i + 3 * isbn[5].to_i + 1 * isbn[6].to_i + 3 * isbn[7].to_i + 1 * isbn[8].to_i + 3 * isbn[9] + 1 * isbn[10] + 3 * isbn[11]
-#     sum = check % 11
-#         if sum == x
-#             p "VALID"
-#         else
-#             p "INVALID"
-#         end
-# end
-
-# def verify
-#     isbn = "1234567890"
-#     isbn = isbn.gsub(/[ -abcdefghijklmnopqrstuvwyz]/, '')
-#         if isbn.length == 10
-#             checking2
-#         elsif isbn.length == 13
-#             checking3
-#         end
-# end
-# verify
