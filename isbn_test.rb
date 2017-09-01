@@ -37,14 +37,19 @@ class TestIsbn < Minitest::Test
     end
 
     def test_check_sumx
-        assert_equal(true, check_sum("877195869x"))
+        assert_equal(true, check_10_sum("877195869x"))
     end
 
     def test_check_sum0
-        assert_equal(true, check_sum("0-321-14653-0"))
+        assert_equal(true, check_10_sum("0-321-14653-0"))
     end
 
     def test_fail
-        assert_equal(false, check_sum("1234567894"))
+        assert_equal(false, check_10_sum("1234567894"))
     end
+
+    def test_check_13_sum
+        assert_equal(true, check_13_sum("9780470059029"))
+    end
+    
 end
