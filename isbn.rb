@@ -1,10 +1,4 @@
-# require 'csv'
-
-# isbn_file = CSV.read('input_isbn_file.csv')
-
-# CSV.parse('input_isbn_file.csv') do |row|
-#     puts row.inspect
-# end
+require 'csv'
 
 def isbn_function(user_given_isbn)
     no_space_or_dash_isbn = user_given_isbn.delete(' -')
@@ -124,3 +118,26 @@ def isbn_function(user_given_isbn)
     
     return_variable
 end
+
+def check_csv()
+    array_set = CSV.read('input_isbn_file.csv')
+    array_set.shift
+
+    final_array = []
+
+    array_set.each do |value|
+        if isbn_function(value[1]) == true
+            value.push("valid")
+        else
+            value.push("invalid")
+        end
+
+        final_array.push(value)
+    end
+
+    CSV.open("output_isbn_file.csv", "w") do |csv|
+        csv << final_array
+    end
+end
+
+check_csv()
