@@ -16,7 +16,7 @@ class TestIsbn < Minitest::Test
     end
 
     def test_10_x
-        assert_equal(true, isbn_function("877195869x"))
+        assert_equal(true, isbn_function("123456789x"))
     end
 
     def test_13

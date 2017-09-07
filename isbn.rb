@@ -18,14 +18,14 @@ def isbn_function(user_given_isbn)
             last_digit = isbn_array.pop
             
             isbn_array.each_with_index do |value, index_position|
-            sum = (index_position.to_i + 1) * value.to_i
-            answer_array << sum
+                sum = (index_position.to_i + 1) * value.to_i
+                answer_array << sum
             end
 
             sum_answer_array = answer_array.inject(0, :+)
             mod_answer_array = sum_answer_array % 11
 
-                if mod_answer_array == last_digit
+                if mod_answer_array == last_digit.to_i
                     return_variable = true
             
                 else
