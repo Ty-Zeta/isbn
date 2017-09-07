@@ -1,83 +1,126 @@
-def empty_array
-    []
-end
+# require 'csv'
 
-def isbn_length(isbn)
-    if isbn.length == 10
-        true
-    elsif isbn.length == 13
-        true
-    else
-        false
-    end
-end 
+# isbn_file = CSV.read('input_isbn_file.csv')
 
-def isbn_dashx(isbn)
-    clean_isbn = isbn.delete(" -")
+# CSV.parse('input_isbn_file.csv') do |row|
+#     puts row.inspect
+# end
 
-    case clean_isbn.length
-        when 10
-            then true
-        when 13
-            then true
-    end
-end
+def isbn_function(user_given_isbn)
+    no_space_or_dash_isbn = user_given_isbn.delete(' -')
 
-def check_10_sum(isbn)
-    sum = 0
+    answer_array = []
 
-    clean_isbn = isbn.scan /\w/
-    last_digit = clean_isbn.pop
-    
-    if last_digit == "x"
-        last_digit = last_digit.to_s
-    end
-    
-        clean_isbn.each_with_index do |value, index_position|
-        sum += ((index_position + 1).to_i * value.to_i)
-    end
-
-    mod = sum % 11
-        if last_digit == "x" && mod == 10
-            true
+    if no_space_or_dash_isbn !~ /\D/
+        
+        if no_space_or_dash_isbn.length == 10
+            isbn_array = no_space_or_dash_isbn.split('')
+            last_digit = isbn_array.pop
             
-        elsif last_digit.to_i == mod.to_i
-            true
+            isbn_array.each_with_index do |value, index_position|
+            sum = (index_position.to_i + 1) * value.to_i
+            answer_array << sum
+            end
+
+            sum_answer_array = answer_array.inject(0, :+)
+            mod_answer_array = sum_answer_array % 11
+
+                if mod_answer_array == last_digit
+                    return_variable = true
+            
+                else
+                    return_variable = false
+                end
+
+        elsif no_space_or_dash_isbn.length == 13
+            isbn_array = no_space_or_dash_isbn.split('')
+            last_digit = isbn_array.pop
+            
+            isbn_array.each_with_index do |value, index_position|
+                if index_position.to_i % 2 == 0
+                    sum = value.to_i * 1
+                    answer_array << sum
+                
+                else
+                    sum = value.to_i * 3
+                    answer_array << sum
+                end
+            end
+
+            sum_answer_array = answer_array.inject(0, :+)
+            mod_answer_array = (10 - (sum_answer_array % 10)) % 10
+                if mod_answer_array == last_digit.to_i
+                    return_variable = true
+                
+                else
+                    return_variable = false
+                end
+
         else
-            false
+            return_variable = false
         end
-end
 
-def check_13_sum(isbn)
-    sum = 0
+    elsif no_space_or_dash_isbn.chop !~ /\D/
+        if no_space_or_dash_isbn == 10
+            isbn_array = no_space_or_dash_isbn.split('')
+            last_digit = isbn_array.pop
+            
+            isbn_array.each_with_index do |value, index|
+            sum = ((index_position.to_i + 1) * value.to_i)
+            answer_array << sum
+        end
 
-    clean_isbn = isbn.scan /\w/
-    last_digit = clean_isbn.pop
+        sum_answer_array = answer_array.inject(0, :+)
+        mod_answer_array = sum_answer_array % 11
 
-    clean_isbn.each_with_index do |value, index_position|
-        if index_position.to_i % 2 == 0
-          sum += value.to_i * 1
+        if mod_answer_array <= 9
+            mod_answer_array   
+        
+        elsif mod_answer_array == 10
+            mod_answer_array = "x"
+        
         else
-          sum += value.to_i * 3
+            return_variable = false
         end
-    end
 
-    mod = (10 - (sum % 10)) % 10
-        if mod == last_digit.to_i
-            true
+        if mod_answer_array == last_digit.downcase
+            return_variable = true
+        
         else
-            false
+            return_variable = false
         end
-end
-
-    # mod = sum % 10
-    # last_digit = (10 - mod)
-    # single_digit = (last_digit % 10)
-
-    #     if single_digit.to_i == mod.to_i
-    #         true
-    #     else
-    #         false
-    #     end
     
+    elsif no_space_or_dash_isbn.length == 13
+        isbn_array = no_space_or_dash_isbn.split('')
+        last_digit = isbn_array.pop
+        
+        isbn_array.each_with_index do |value, index_position|
+            if index_position.to_i % 2 == 0
+                sum = value.to_i * 1
+                answer_array << sum
+            
+            else
+                sum = value.to_i * 3
+                answer_array << sum
+            end
+        end
 
+        sum_answer_array = answer_array.inject(0, :+)
+        mod_answer_array = (10 - (sum % 10)) % 10
+            if mod_answer_array == last_digit.to_i
+                return_variable = true
+            
+            else
+                return_variable = false
+            end
+
+        else
+            return_variable = false
+        end
+    
+    else
+        return_variable = false
+    end
+    
+    return_variable
+end
