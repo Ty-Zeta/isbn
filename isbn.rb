@@ -119,27 +119,18 @@ def isbn_function(user_given_isbn)
     return_variable
 end
 
-def check_csv()
-    array_set = CSV.read('input_isbn_file.csv')
-    array_set.shift
+def check_csv
+    write_file = File.open("output_isbn_file.csv", "w")
 
-    final_array = []
-
-    array_set.each do |value|
-        if isbn_function(value[1]) == true
-            value.push("valid")
+    CSV.foreach('input_isbn_file.csv') do |row|
+        if isbn_function(row[1]) == true
+            row << ("valid")
         else
-            value.push("invalid")
+            row << ("invalid")
         end
 
-        final_array.push(value)
-    end
-
-    CSV.open("output_isbn_file.csv", "w") do |csv|
-        csv << final_array
+        write_file.puts row[0] + ", " + row[1] + ", " + row[2]
     end
 end
 
-check_csv()
-
-test
+check_csv
